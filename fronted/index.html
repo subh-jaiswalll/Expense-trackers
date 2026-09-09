@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+</head>
+
+<body>
+
+
+    <!-- =====================================================
+     LANDING PAGE
+====================================================== -->
+
+    <section id="landingPage" class="landing-page">
+
+        <div class="landing-container">
+
+            <div class="landing-icon">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <h1>Expense Tracker</h1>
+
+            <p>
+                Manage your income and expenses easily.
+            </p>
+
+            <div class="buttons">
+
+                <a href="login/login.html" class="login">
+                    Login
+                </a>
+
+                <a href="signup/signup.html" class="signup">
+                    Sign Up
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     DASHBOARD
+====================================================== -->
+
+    <section id="dashboardPage" class="dashboard-page">
+
+        <!-- ================= NAVBAR ================= -->
+
+
+
+        <header class="navbar">
+
+            <div class="logo-section">
+
+                <i class="fa-solid fa-wallet"></i>
+
+                <h2>Expense Tracker</h2>
+
+            </div>
+
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <div class="user-section">
+
+                <div class="user-avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <span id="userName">User</span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <nav>
+
+                <a href="#" class="active">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a href="#" onclick="openTransactionModal()">
+
+                    <i class="fa-solid fa-circle-plus"></i>
+
+                    <span>Add Transaction</span>
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    <span>Transactions</span>
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    <span>Reports</span>
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                    <span>Categories</span>
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    <span>Settings</span>
+
+                </a>
+
+
+                <a href="#" onclick="logout()">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="wallet-image">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+                <p>
+                    Manage your income<br>
+                    and expenses easily
+                </p>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+            <!-- Dashboard Header -->
+
+            <div class="dashboard-header">
+
+                <div>
+
+                    <h1>Dashboard</h1>
+
+                    <p>Overview of your finances</p>
+
+                </div>
+
+
+                <select id="monthFilter">
+
+                </select>
+
+            </div>
+
+
+            <!-- ================= SUMMARY CARDS ================= -->
+
+            <section class="summary-cards">
+
+
+                <!-- Income -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon income-icon">
+
+                        <i class="fa-solid fa-arrow-down"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Income</p>
+
+                        <h2 id="totalIncome">
+                            ₹ 0.00
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Expense -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon expense-icon">
+
+                        <i class="fa-solid fa-arrow-up"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Expense</p>
+
+                        <h2 id="totalExpense">
+                            ₹ 0.00
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Balance -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon balance-icon">
+
+                        <i class="fa-solid fa-wallet"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Net Balance</p>
+
+                        <h2 id="netBalance">
+                            ₹ 0.00
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Savings -->
+
+                <div class="summary-card">
+
+                    <div class="card-icon savings-icon">
+
+                        <i class="fa-solid fa-piggy-bank"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Total Savings</p>
+
+                        <h2 id="totalSavings">
+                            ₹ 0.00
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= TRANSACTIONS ================= -->
+
+            <section class="transaction-container">
+
+                <div class="transaction-header">
+
+                    <h2>All Transactions</h2>
+
+
+                    <div class="transaction-actions">
+
+                        <button class="add-btn" onclick="openTransactionModal()">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Add Transaction
+
+                        </button>
+
+
+                        <button class="filter-btn">
+
+                            <i class="fa-solid fa-filter"></i>
+
+                            Filter
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <!-- Table -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+
+                                <th>Description</th>
+
+                                <th>Category</th>
+
+                                <th>Income</th>
+
+                                <th>Expense</th>
+
+                                <th>Balance</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="transactionBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =====================================================
+         ADD TRANSACTION MODAL
+    ====================================================== -->
+
+        <div class="modal" id="transactionModal">
+
+            <div class="modal-content">
+
+
+                <div class="modal-header">
+
+                    <h2>Add Transaction</h2>
+
+                    <button onclick="closeTransactionModal()">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+
+                <form id="transactionForm">
+
+
+                    <!-- Date -->
+
+                    <div class="form-group">
+
+                        <label for="date">
+                            Date
+                        </label>
+
+                        <input type="date" id="date" name="date" required>
+
+                    </div>
+
+
+                    <!-- Description -->
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <input type="text" id="description" name="description" placeholder="e.g. Salary" required>
+
+                    </div>
+
+
+                    <!-- Category -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <input type="text" id="category" name="category" placeholder="e.g. Salary" required>
+
+                    </div>
+
+
+                    <!-- Income / Expense -->
+
+                    <div class="form-row">
+
+
+                        <div class="form-group">
+
+                            <label for="income">
+                                Income
+                            </label>
+
+                            <input type="number" id="income" name="income" placeholder="0" min="0">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="expense">
+                                Expense
+                            </label>
+
+                            <input type="number" id="expense" name="expense" placeholder="0" min="0">
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="submit-btn">
+
+                        Add Transaction
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

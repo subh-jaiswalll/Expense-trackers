@@ -3,7 +3,9 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
-const fs = require('fs')
+const fs = require('fs');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,8 +17,10 @@ const userRouters = require('./routes/userRoutes.js')
 const otpRoutes = require('./routes/otpRoutes.js')
 
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
+app.use(helmet());
+app.use(compression());
 
 app.use('/expense', expenseRoutes);
 app.use('/user', userRouters);

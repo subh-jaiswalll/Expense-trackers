@@ -8,3 +8,4 @@ server.key
 
 npm-debug.log*
 .DS_Store
+access.log

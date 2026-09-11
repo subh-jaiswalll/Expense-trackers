@@ -108,7 +108,7 @@ function populateMonthFilter() {
 
 async function getTransactions() {
   try {
-    const response = await fetch("http://localhost:3000/expense", {
+    const response = await fetch("https://localhost:3000/expense", {
       method: "GET",
 
       headers: {
@@ -330,7 +330,7 @@ async function deleteTransaction(id) {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/expense/${id}`, {
+    const response = await fetch(`https://localhost:3000/expense/${id}`, {
       method: "DELETE",
 
       headers: {
@@ -434,7 +434,7 @@ document
     // ================= POST REQUEST =================
 
     try {
-      const response = await fetch("http://localhost:3000/expense", {
+      const response = await fetch("https://localhost:3000/expense", {
         method: "POST",
 
         headers: {

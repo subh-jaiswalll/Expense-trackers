@@ -59,7 +59,7 @@ resetPasswordForm.addEventListener("submit", async (event) => {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/user/reset-password/${token}`,
+      `https://localhost:3000/user/reset-password/${token}`,
       {
         method: "POST",
 

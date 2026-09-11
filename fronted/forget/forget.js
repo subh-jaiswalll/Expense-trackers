@@ -17,7 +17,7 @@ forgotPasswordForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/user/forgot-password",
+            "https://localhost:3000/user/forgot-password",
             {
                 method: "POST",
 

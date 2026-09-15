@@ -9,9 +9,9 @@ const Expense = sequelize.define("Expense", {
     autoIncrement: true,
   },
   date: {
-  type: DataTypes.DATE,
-  defaultValue: DataTypes.NOW,
-},
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 
   description: {
     type: DataTypes.STRING,

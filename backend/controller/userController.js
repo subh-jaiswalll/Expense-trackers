@@ -6,243 +6,158 @@ const jwt = require("jsonwebtoken");
 
 const crypto = require("crypto");
 
-// const User = require("../models/userModel");
-
 const { sendPasswordResetEmail } = require("../service/emailService.js");
 
 
-// ================= CREATE USER =================
-
 const createUser = async (req, res) => {
-
-    try {
-
-        const { name, email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
 
-        // Check fields
-
-        if (!name || !email || !password) {
-
-            return res.status(400).json({
-                message: "All fields are required"
-            });
-
-        }
-
-
-        // Check existing user
-
-        const existingUser = await userModels.findOne({
-            where: {
-                email: email
-            }
-        });
-
-
-        if (existingUser) {
-
-            return res.status(409).json({
-                message: "Email already found"
-            });
-
-        }
-
-
-        // Hash password
-
-        const hashedPassword = await bcrypt.hash(
-            password,
-            10
-        );
-
-
-        // Create user
-
-        const user = await userModels.create({
-
-            name: name,
-            email: email,
-            password: hashedPassword
-
-        });
-
-
-        return res.status(201).json({
-
-            success: true,
-
-            message: "User created successfully",
-
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            }
-
-        });
-
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
     }
 
-    catch (err) {
 
-        console.log(err);
+    const existingUser = await userModels.findOne({
+      where: {
+        email: email,
+      },
+    });
 
-        return res.status(500).json({
-
-            success: false,
-
-            message: "Server Error",
-
-            error: err.message
-
-        });
-
+    if (existingUser) {
+      return res.status(409).json({
+        message: "Email already found",
+      });
     }
 
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+
+    const user = await userModels.create({
+      name: name,
+      email: email,
+      password: hashedPassword,
+    });
+
+    return res.status(201).json({
+      success: true,
+
+      message: "User created successfully",
+
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      success: false,
+
+      message: "Server Error",
+
+      error: err.message,
+    });
+  }
 };
 
 
-// ================= GENERATE TOKEN =================
-
 function generateAccessToken(user) {
+  return jwt.sign(
+    {
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+    },
 
-    return jwt.sign(
+    process.env.TOKEN_SECRET,
 
-        {
-            userId: user.id,
-            name: user.name,
-            email: user.email
-        },
-
-        process.env.TOKEN_SECRET,
-
-        {
-            expiresIn: "1h"
-        }
-
-    );
-
+    {
+      expiresIn: "1h",
+    },
+  );
 }
 
 
-// ================= LOGIN =================
-
 const loginUser = async (req, res) => {
-
-    try {
-
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
 
-        // Check fields
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
 
-        if (!email || !password) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: "Email and password are required"
-
-            });
-
-        }
-
-
-        // Find user
-
-        const user = await userModels.findOne({
-
-            where: {
-                email: email
-            }
-
-        });
-
-
-        if (!user) {
-
-            return res.status(404).json({
-
-                success: false,
-
-                message: "User not found!"
-
-            });
-
-        }
-
-
-        // Compare password
-
-        const isCorrectPassword = await bcrypt.compare(
-
-            password,
-
-            user.password
-
-        );
-
-
-        if (!isCorrectPassword) {
-
-            return res.status(401).json({
-
-                success: false,
-
-                message: "Incorrect Password"
-
-            });
-
-        }
-
-
-        // Generate token
-
-        const token = generateAccessToken(user);
-
-
-        return res.status(200).json({
-
-            success: true,
-
-            message: "User logged in successfully",
-
-            user: {
-
-                id: user.id,
-
-                name: user.name,
-
-                email: user.email
-
-            },
-
-            token: token
-
-        });
-
+        message: "Email and password are required",
+      });
     }
 
-    catch (err) {
 
-        console.log(err);
+    const user = await userModels.findOne({
+      where: {
+        email: email,
+      },
+    });
 
-        return res.status(500).json({
+    if (!user) {
+      return res.status(404).json({
+        success: false,
 
-            success: false,
-
-            message: "Server error",
-
-            error: err.message
-
-        });
-
+        message: "User not found!",
+      });
     }
 
+
+    const isCorrectPassword = await bcrypt.compare(
+      password,
+
+      user.password,
+    );
+
+    if (!isCorrectPassword) {
+      return res.status(401).json({
+        success: false,
+
+        message: "Incorrect Password",
+      });
+    }
+
+
+    const token = generateAccessToken(user);
+
+    return res.status(200).json({
+      success: true,
+
+      message: "User logged in successfully",
+
+      user: {
+        id: user.id,
+
+        name: user.name,
+
+        email: user.email,
+      },
+
+      token: token,
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      success: false,
+
+      message: "Server error",
+
+      error: err.message,
+    });
+  }
 };
-
 
 const forgotPassword = async (req, res) => {
   try {
@@ -261,7 +176,6 @@ const forgotPassword = async (req, res) => {
       },
     });
 
-    // Don't reveal whether email exists
     if (!user) {
       return res.status(200).json({
         success: true,
@@ -270,16 +184,13 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    // Generate secure random token
     const rawToken = crypto.randomBytes(32).toString("hex");
 
-    // Hash token before storing in database
     const hashedToken = crypto
       .createHash("sha256")
       .update(rawToken)
       .digest("hex");
 
-    // Token expires after 15 minutes
     const expiry = new Date(Date.now() + 15 * 60 * 1000);
 
     await user.update({
@@ -287,22 +198,15 @@ const forgotPassword = async (req, res) => {
       resetPasswordExpires: expiry,
     });
 
-    // Link sent to user
-const resetLink =
-    `${process.env.FRONTEND_URL}/reset/reset.html?token=${rawToken}`;
-    
-    await sendPasswordResetEmail(
-      user.email,
-      user.name,
-      resetLink
-    );
+    const resetLink = `${process.env.FRONTEND_URL}/reset/reset.html?token=${rawToken}`;
+
+    await sendPasswordResetEmail(user.email, user.name, resetLink);
 
     return res.status(200).json({
       success: true,
       message:
         "If an account with that email exists, a password reset link has been sent.",
     });
-
   } catch (error) {
     console.error("Forgot password error:", error);
 
@@ -311,10 +215,7 @@ const resetLink =
       message: "Something went wrong",
     });
   }
-}; 
-
-
-
+};
 
 const resetPassword = async (req, res) => {
   try {
@@ -342,11 +243,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Hash token received from URL
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(token)
-      .digest("hex");
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     const user = await userModels.findOne({
       where: {
@@ -361,24 +258,18 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Check expiration
-    if (
-      !user.resetPasswordExpires ||
-      user.resetPasswordExpires < new Date()
-    ) {
+    if (!user.resetPasswordExpires || user.resetPasswordExpires < new Date()) {
       return res.status(400).json({
         success: false,
         message: "Reset token has expired",
       });
     }
 
-    // Hash new password
     const hashedPassword = await bcrypt.hash(password, 12);
 
     await user.update({
       password: hashedPassword,
 
-      // Invalidate token after successful reset
       resetPasswordToken: null,
       resetPasswordExpires: null,
     });
@@ -387,7 +278,6 @@ const resetPassword = async (req, res) => {
       success: true,
       message: "Password reset successfully",
     });
-
   } catch (error) {
     console.error("Reset password error:", error);
 
@@ -398,15 +288,12 @@ const resetPassword = async (req, res) => {
   }
 };
 
-
 module.exports = {
+  loginUser,
 
-    loginUser,
+  createUser,
 
-    createUser,
+  forgotPassword,
 
-    forgotPassword,
-
-    resetPassword,
-
+  resetPassword,
 };

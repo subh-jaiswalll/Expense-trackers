@@ -1,42 +1,27 @@
-
 const { BrevoClient } = require("@getbrevo/brevo");
 
-
-// Create Brevo client
 const client = new BrevoClient({
-    apiKey: process.env.BREVO_API_KEY,
+  apiKey: process.env.BREVO_API_KEY,
 });
 
+const sendPasswordResetEmail = async (email, name, resetLink) => {
+  try {
+    const response = await client.transactionalEmails.sendTransacEmail({
+      sender: {
+        email: process.env.BREVO_SENDER_EMAIL,
+        name: process.env.BREVO_SENDER_NAME || "DevProInExp",
+      },
 
-// Send password reset email
-const sendPasswordResetEmail = async (
-    email,
-    name,
-    resetLink
-) => {
+      to: [
+        {
+          email: email,
+          name: name || "User",
+        },
+      ],
 
-    try {
+      subject: "Reset Your Password",
 
-        const response =
-            await client.transactionalEmails.sendTransacEmail({
-
-                sender: {
-                    email: process.env.BREVO_SENDER_EMAIL,
-                    name:
-                        process.env.BREVO_SENDER_NAME ||
-                        "DevProInExp",
-                },
-
-                to: [
-                    {
-                        email: email,
-                        name: name || "User",
-                    },
-                ],
-
-                subject: "Reset Your Password",
-
-                htmlContent: `
+      htmlContent: `
                     <!DOCTYPE html>
 
                     <html>
@@ -112,31 +97,18 @@ const sendPasswordResetEmail = async (
 
                     </html>
                 `,
-            });
+    });
 
+    console.log("Password reset email sent:", response);
 
-        console.log(
-            "Password reset email sent:",
-            response
-        );
+    return response;
+  } catch (error) {
+    console.error("Brevo email error:", error);
 
-
-        return response;
-
-
-    } catch (error) {
-
-        console.error(
-            "Brevo email error:",
-            error
-        );
-
-        throw error;
-    }
+    throw error;
+  }
 };
-
 
 module.exports = {
-    sendPasswordResetEmail,
+  sendPasswordResetEmail,
 };
-

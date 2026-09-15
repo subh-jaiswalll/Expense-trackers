@@ -1,50 +1,45 @@
+const { DataTypes } = require("sequelize");
 
-const {DataTypes} = require('sequelize');
+const sequelize = require("../db/db.js");
 
-const sequelize = require('../db/db.js')
+const User = sequelize.define("User", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
 
-const User = sequelize.define('User', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 
-    id : {
-        type : DataTypes.INTEGER,
-        autoIncrement : true,
-        primaryKey : true,
-        
-    },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
 
-    name :{
-        type : DataTypes.STRING,
-        allowNull : false
-    },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 
-    email : {
-        type : DataTypes.STRING,
-        allowNull : false,
-        unique : true
+  isPremium: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 
-    },
+  resetPasswordToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 
-    password : {
-        type : DataTypes.STRING,
-        allowNull : false
-    },
-
-    isPremium : {
-        type : DataTypes.BOOLEAN,
-        defaultValue : false,
-        allowNull : false
-    },
-
-    resetPasswordToken : {
-        type : DataTypes.STRING,
-        allowNull : true
-    },
-
-    resetPasswordExpires : {
-        type : DataTypes.DATE,
-        allowNull : true
-    }
-
-})
+  resetPasswordExpires: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+});
 
 module.exports = User;

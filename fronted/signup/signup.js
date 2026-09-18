@@ -14,7 +14,7 @@ signupForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://tagged-sensor-bedroom-bow.trycloudflare.com/user/signup",
+            "https://hero-factors-items-kevin.trycloudflare.com/user/signup",
             {
                 method: "POST",
 

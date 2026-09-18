@@ -17,7 +17,7 @@ forgotPasswordForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://tagged-sensor-bedroom-bow.trycloudflare.com/user/forgot-password",
+            "https://hero-factors-items-kevin.trycloudflare.com/user/forgot-password",
             {
                 method: "POST",
 

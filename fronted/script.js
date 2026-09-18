@@ -333,7 +333,7 @@ async function deleteTransaction(id) {
   }
 
   try {
-    const response = await fetch(`https://localhost:3000/expense/${id}`, {
+    const response = await fetch(`https://tagged-sensor-bedroom-bow.trycloudflare.com/expense/${id}`, {
       method: "DELETE",
 
       headers: {
@@ -437,7 +437,7 @@ document
     // ================= POST REQUEST =================
 
     try {
-      const response = await fetch("https://localhost:3000/expense", {
+      const response = await fetch("https://tagged-sensor-bedroom-bow.trycloudflare.com/expense", {
         method: "POST",
 
         headers: {

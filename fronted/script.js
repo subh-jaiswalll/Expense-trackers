@@ -106,9 +106,12 @@ function populateMonthFilter() {
 
 // ================= GET EXPENSES =================
 
+// https://tagged-sensor-bedroom-bow.trycloudflare.com/expense
+// http://15.207.113.101/expense
+
 async function getTransactions() {
   try {
-    const response = await fetch("http://15.207.113.101/expense", {
+    const response = await fetch("https://tagged-sensor-bedroom-bow.trycloudflare.com/expense", {
       method: "GET",
 
       headers: {

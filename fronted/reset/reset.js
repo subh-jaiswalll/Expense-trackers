@@ -57,9 +57,10 @@ resetPasswordForm.addEventListener("submit", async (event) => {
 
   message.textContent = "Resetting password...";
 
+  const API_URL = "https://tagged-sensor-bedroom-bow.trycloudflare.com";
   try {
     const response = await fetch(
-      `http://15.207.113.101/user/reset-password/${token}`,
+     `${API_URL}/user/reset-password/${token}`,
       {
         method: "POST",
 

@@ -10,7 +10,7 @@ loginForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "http://15.207.113.101/user/login",
+            "https://tagged-sensor-bedroom-bow.trycloudflare.com/user/login",
             {
                 method: "POST",
 

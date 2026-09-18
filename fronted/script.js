@@ -1,6 +1,6 @@
 // ================= API CONFIG =================
 
-const API_URL = "https://fruit-mason-robust-insulin.trycloudflare.com";
+const API_URL = "https://hero-factors-items-kevin.trycloudflare.com/";
 
 // ================= TOKEN =================
 

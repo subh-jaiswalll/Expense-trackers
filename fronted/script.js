@@ -1,3 +1,7 @@
+// ================= API CONFIG =================
+
+const API_URL = "https://tagged-sensor-bedroom-bow.trycloudflare.com";
+
 // ================= TOKEN =================
 
 const token = localStorage.getItem("token");
@@ -106,12 +110,9 @@ function populateMonthFilter() {
 
 // ================= GET EXPENSES =================
 
-// https://tagged-sensor-bedroom-bow.trycloudflare.com/expense
-// http://15.207.113.101/expense
-
 async function getTransactions() {
   try {
-    const response = await fetch("https://tagged-sensor-bedroom-bow.trycloudflare.com/expense", {
+    const response = await fetch(`${API_URL}/expense`, {
       method: "GET",
 
       headers: {
@@ -183,12 +184,12 @@ function renderTransactions(selectedMonth = "all") {
 
   if (filteredTransactions.length === 0) {
     tbody.innerHTML = `
-            <tr>
-                <td colspan="7" style="text-align:center;">
-                    No transactions found
-                </td>
-            </tr>
-        `;
+      <tr>
+        <td colspan="7" style="text-align:center;">
+          No transactions found
+        </td>
+      </tr>
+    `;
 
     updateSummary(0, 0, 0);
 
@@ -219,45 +220,39 @@ function renderTransactions(selectedMonth = "all") {
     const row = document.createElement("tr");
 
     row.innerHTML = `
+      <td>
+        ${formatDate(transaction.date)}
+      </td>
 
-                <td>
-                    ${formatDate(transaction.date)}
-                </td>
+      <td>
+        ${transaction.description}
+      </td>
 
-                <td>
-                    ${transaction.description}
-                </td>
+      <td>
+        ${transaction.category}
+      </td>
 
-                <td>
-                    ${transaction.category}
-                </td>
+      <td class="income-value">
+        ${formatCurrency(income)}
+      </td>
 
-                <td class="income-value">
-                    ${formatCurrency(income)}
-                </td>
+      <td class="expense-value">
+        ${formatCurrency(expense)}
+      </td>
 
-                <td class="expense-value">
-                    ${formatCurrency(expense)}
-                </td>
+      <td class="balance-value">
+        ${formatCurrency(balance)}
+      </td>
 
-                <td class="balance-value">
-                    ${formatCurrency(balance)}
-                </td>
-
-                <td>
-
-                    <button
-                        class="delete-btn"
-                        onclick="deleteTransaction(${transaction.id})"
-                    >
-
-                        <i class="fa-solid fa-trash"></i>
-
-                    </button>
-
-                </td>
-
-            `;
+      <td>
+        <button
+          class="delete-btn"
+          onclick="deleteTransaction(${transaction.id})"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    `;
 
     tbody.appendChild(row);
   });
@@ -271,26 +266,24 @@ function renderTransactions(selectedMonth = "all") {
   const finalBalance = totalIncome - totalExpense;
 
   totalRow.innerHTML = `
+    <td colspan="3">
+      Total
+    </td>
 
-        <td colspan="3">
-            Total
-        </td>
+    <td class="income-value">
+      ${formatCurrency(totalIncome)}
+    </td>
 
-        <td class="income-value">
-            ${formatCurrency(totalIncome)}
-        </td>
+    <td class="expense-value">
+      ${formatCurrency(totalExpense)}
+    </td>
 
-        <td class="expense-value">
-            ${formatCurrency(totalExpense)}
-        </td>
+    <td class="balance-value">
+      ${formatCurrency(finalBalance)}
+    </td>
 
-        <td class="balance-value">
-            ${formatCurrency(finalBalance)}
-        </td>
-
-        <td></td>
-
-    `;
+    <td></td>
+  `;
 
   tbody.appendChild(totalRow);
 
@@ -308,24 +301,28 @@ function updateSummary(totalIncome, totalExpense, balance) {
   document.getElementById("totalExpense").textContent =
     formatCurrency(totalExpense);
 
-  document.getElementById("netBalance").textContent = formatCurrency(balance);
+  document.getElementById("netBalance").textContent =
+    formatCurrency(balance);
 
-  document.getElementById("totalSavings").textContent = formatCurrency(balance);
+  document.getElementById("totalSavings").textContent =
+    formatCurrency(balance);
 }
 
 // ================= MONTH FILTER EVENT =================
 
-document.getElementById("monthFilter").addEventListener("change", function () {
-  const selectedMonth = this.value;
+document
+  .getElementById("monthFilter")
+  .addEventListener("change", function () {
+    const selectedMonth = this.value;
 
-  renderTransactions(selectedMonth);
-});
+    renderTransactions(selectedMonth);
+  });
 
 // ================= DELETE TRANSACTION =================
 
 async function deleteTransaction(id) {
   const confirmDelete = confirm(
-    "Are you sure you want to delete this transaction?",
+    "Are you sure you want to delete this transaction?"
   );
 
   if (!confirmDelete) {
@@ -333,7 +330,7 @@ async function deleteTransaction(id) {
   }
 
   try {
-    const response = await fetch(`https://tagged-sensor-bedroom-bow.trycloudflare.com/expense/${id}`, {
+    const response = await fetch(`${API_URL}/expense/${id}`, {
       method: "DELETE",
 
       headers: {
@@ -412,13 +409,17 @@ document
 
     const date = document.getElementById("date").value;
 
-    const description = document.getElementById("description").value.trim();
+    const description =
+      document.getElementById("description").value.trim();
 
-    const category = document.getElementById("category").value.trim();
+    const category =
+      document.getElementById("category").value.trim();
 
-    const income = Number(document.getElementById("income").value) || 0;
+    const income =
+      Number(document.getElementById("income").value) || 0;
 
-    const expense = Number(document.getElementById("expense").value) || 0;
+    const expense =
+      Number(document.getElementById("expense").value) || 0;
 
     // ================= VALIDATION =================
 
@@ -437,7 +438,7 @@ document
     // ================= POST REQUEST =================
 
     try {
-      const response = await fetch("https://tagged-sensor-bedroom-bow.trycloudflare.com/expense", {
+      const response = await fetch(`${API_URL}/expense`, {
         method: "POST",
 
         headers: {
@@ -465,7 +466,6 @@ document
         alert("Session expired. Please login again.");
 
         localStorage.removeItem("token");
-
         localStorage.removeItem("user");
 
         window.location.href = "login/login.html";

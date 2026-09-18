@@ -1,7 +1,6 @@
 // ================= API CONFIG =================
 
-const API_URL = "https://hero-factors-items-kevin.trycloudflare.com/";
-
+const API_URL = "https://hero-factors-items-kevin.trycloudflare.com";
 // ================= TOKEN =================
 
 const token = localStorage.getItem("token");

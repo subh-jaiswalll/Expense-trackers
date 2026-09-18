@@ -10,7 +10,7 @@ loginForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://localhost:3000/user/login",
+            "http://15.207.113.101/user/login",
             {
                 method: "POST",
 

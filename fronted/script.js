@@ -108,7 +108,7 @@ function populateMonthFilter() {
 
 async function getTransactions() {
   try {
-    const response = await fetch("https://localhost:3000/expense", {
+    const response = await fetch("http://15.207.113.101/expense", {
       method: "GET",
 
       headers: {

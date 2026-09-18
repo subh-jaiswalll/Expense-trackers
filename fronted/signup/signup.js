@@ -14,7 +14,7 @@ signupForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://localhost:3000/user/signup",
+            "http://15.207.113.101/user/signup",
             {
                 method: "POST",
 

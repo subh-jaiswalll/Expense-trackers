@@ -1,6 +1,6 @@
 // ================= API CONFIG =================
 
-const API_URL = "https://tagged-sensor-bedroom-bow.trycloudflare.com";
+const API_URL = "https://fruit-mason-robust-insulin.trycloudflare.com";
 
 // ================= TOKEN =================
 

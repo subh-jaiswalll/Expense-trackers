@@ -14,7 +14,7 @@ signupForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://expense-trackers-application.onrender.com",
+            "https://expense-trackers-application.onrender.com/user/signup",
             {
                 method: "POST",
 

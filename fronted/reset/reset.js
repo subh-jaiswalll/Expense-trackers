@@ -57,7 +57,7 @@ resetPasswordForm.addEventListener("submit", async (event) => {
 
   message.textContent = "Resetting password...";
 
-  const API_URL = "https://localhost:3000";
+  const API_URL = "https://expense-trackers-application.onrender.com";
   try {
     const response = await fetch(
      `${API_URL}/user/reset-password/${token}`,

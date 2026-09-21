@@ -57,7 +57,7 @@ resetPasswordForm.addEventListener("submit", async (event) => {
 
   message.textContent = "Resetting password...";
 
-  const API_URL = "https://hero-factors-items-kevin.trycloudflare.com";
+  const API_URL = "https://localhost:3000";
   try {
     const response = await fetch(
      `${API_URL}/user/reset-password/${token}`,

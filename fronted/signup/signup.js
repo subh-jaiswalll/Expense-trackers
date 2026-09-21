@@ -14,7 +14,7 @@ signupForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://hero-factors-items-kevin.trycloudflare.com/user/signup",
+            "https://localhost:3000/user/signup",
             {
                 method: "POST",
 

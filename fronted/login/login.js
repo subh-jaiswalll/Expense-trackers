@@ -10,7 +10,7 @@ loginForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://hero-factors-items-kevin.trycloudflare.com/user/login",
+            "https://localhost:3000/user/login",
             {
                 method: "POST",
 

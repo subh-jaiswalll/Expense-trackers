@@ -1,6 +1,6 @@
 // ================= API CONFIG =================
 
-const API_URL = "https://hero-factors-items-kevin.trycloudflare.com";
+const API_URL = "https://localhost:3000";
 // ================= TOKEN =================
 
 const token = localStorage.getItem("token");
@@ -131,7 +131,7 @@ async function getTransactions() {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      window.location.href = "login/login.html";
+      window.location.href = "/fronted/login/login.html";
 
       return;
     }
@@ -349,7 +349,7 @@ async function deleteTransaction(id) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      window.location.href = "login/login.html";
+      window.location.href = "/fronted/login/login.html";
 
       return;
     }
@@ -516,7 +516,7 @@ function logout() {
 
   localStorage.removeItem("user");
 
-  window.location.href = "login/login.html";
+  window.location.href = "/fronted/login/login.html";
 }
 
 // ================= INITIAL LOAD =================

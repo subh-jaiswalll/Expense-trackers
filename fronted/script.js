@@ -1,6 +1,6 @@
 // ================= API CONFIG =================
 
-const API_URL = "https://localhost:3000";
+const API_URL = "https://expense-trackers-application.onrender.com";
 // ================= TOKEN =================
 
 const token = localStorage.getItem("token");

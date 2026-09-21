@@ -131,7 +131,7 @@ async function getTransactions() {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      window.location.href = "/fronted/login/login.html";
+      window.location.href = "/login/login.html";
 
       return;
     }

@@ -236,7 +236,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    if (password.length < 8) {
+    if (password.length < 4) {
       return res.status(400).json({
         success: false,
         message: "Password must be at least 4 characters",

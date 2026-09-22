@@ -39,8 +39,8 @@ resetPasswordForm.addEventListener("submit", async (event) => {
   // Check password
   // ===============================
 
-  if (password.length < 8) {
-    message.textContent = "Password must be at least 8 characters.";
+  if (password.length < 4) {
+    message.textContent = "Password must be at least 4 characters.";
 
     return;
   }

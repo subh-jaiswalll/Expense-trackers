@@ -17,7 +17,7 @@ forgotPasswordForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://localhost:3000/user/forgot-password",
+            "https://expense-trackers-application.onrender.com/user/forgot-password",
             {
                 method: "POST",
 

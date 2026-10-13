@@ -467,7 +467,7 @@ document
         localStorage.removeItem("token");
         localStorage.removeItem("user");
 
-        window.location.href = "login/login.html";
+        window.location.href = "../login/login.html";
 
         return;
       }
@@ -516,7 +516,7 @@ function logout() {
 
   localStorage.removeItem("user");
 
-  window.location.href = "login/login.html";
+  window.location.href = "../login/login.html";
 }
 
 // ================= INITIAL LOAD =================
